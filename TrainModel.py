@@ -1,12 +1,12 @@
 import turicreate as tc
 
 # Load sessions from preprocessed data
-data = tc.SFrame('hapt_data.sframe')
+data = tc.SFrame('exercise_data.sframe')
 
 # Train/test split by recording sessions
 train, test = tc.activity_classifier.util.random_split_by_session(data,
                                                                   session_id='exp_id',
-                                                                  fraction=0.8)
+                                                                  fraction=0.9)
 
 # Create an activity classifier
 model = tc.activity_classifier.create(train, session_id='exp_id', target='activity',
