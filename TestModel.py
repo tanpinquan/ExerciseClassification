@@ -36,7 +36,7 @@ labels = tc.SFrame.read_csv(data_dir + 'labels_3_exercises.csv', delimiter=',', 
 print(labels)
 
 data_files = glob(data_dir + 'shoulder*.csv')
-sel_col = ['l_arm_r','l_arm_p','l_elbow_x','l_elbow_y','l_wrist_x','l_wrist_y','r_arm_r','r_arm_p','r_elbow_x','r_elbow_y','r_wrist_x','r_wrist_y']
+
 # Load data
 data = tc.SFrame()
 files = sorted(data_files)
@@ -48,8 +48,6 @@ for data_file in files:
     sf = tc.SFrame.read_csv(data_file, delimiter=',', header=True, verbose=False, column_type_hints=float)
     col_names = sf.column_names()
     sf = sf.remove_columns(col_names[-42:])
-    sf = sf.remove_columns(col_names[0:3])
-    sf = sf[sel_col]
     # sf = sf.rename({'X1': 'acc_x', 'X2': 'acc_y', 'X3': 'acc_z'})
     sf['exp_id'] = exp_id
 
@@ -81,12 +79,8 @@ target_map = {
 }
 
 # Use the same labels used in the experiment
-data.save('exercise_data_unfiltered.sframe')
 data = data.filter_by(list(target_map.keys()), 'activity_id')
 data['activity'] = data['activity_id'].apply(lambda x: target_map[x])
-
-
-
 
 plt.plot(data['l_arm_r'])
 plt.plot(data['r_arm_r'])
