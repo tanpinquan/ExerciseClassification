@@ -11,7 +11,7 @@ train, test = tc.activity_classifier.util.random_split_by_session(data,
 
 # Create an activity classifier
 model = tc.activity_classifier.create(train, session_id='exp_id', target='activity',
-                                      prediction_window=50, max_iterations=10)
+                                      prediction_window=125, max_iterations=10)
 
 # Evaluate the model and save the results into a dictionary
 metrics = model.evaluate(train)
